@@ -1,0 +1,254 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4">
+
+                <ng-template pTemplate="left">
+                    <div class="my-2">
+                        <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"
+                            (click)="openNew()"></button>
+                        <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger mr-2"
+                            (click)="deleteSelectedDonars()"
+                            [disabled]="!selectedDonars || !selectedDonars.length"></button>
+                        <span class="p-buttonset">
+                            <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
+                                class="p-button-warning" pTooltip="XLS" tooltipPosition="bottom"></button>
+                            <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()"
+                                class="p-button-warning" pTooltip="PDF" tooltipPosition="bottom"></button>
+                        </span>
+                    </div>
+                </ng-template>
+            </p-toolbar>
+
+            <p-table id="my-table" #dt [value]="donars" responsiveLayout="scroll" [rows]="10"
+                [globalFilterFields]="['name','mobile','email']" [rows]="10" [paginator]="true"
+                [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [(selection)]="selectedDonars" selectionMode="multiple" [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h5 class="m-0">Donars</h5>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..."
+                                class="w-full sm:w-auto" />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="mobile">Mobile<p-sortIcon field="mobile"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="dob">DOB<p-sortIcon field="dob"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="group">Blood Group<p-sortIcon field="group"></p-sortIcon>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-donar>
+                    <tr>
+                        <td>
+                            <p-tableCheckbox [value]="donar"></p-tableCheckbox>
+                        </td>
+                        <td>{{donar.name}}</td>
+                        <td>{{donar.mobile}}</td>
+                        <td>{{donar.dob}}</td>
+                        <td>{{donar.group}}</td>
+                        <td>
+                            <div class="flex">
+                                <button pButton pRipple icon="pi pi-eye"
+                                class="p-button-rounded p-button-success mr-2"
+                                (click)="viewDonar(donar)"></button>
+                                <button pButton pRipple icon="pi pi-pencil"
+                                    class="p-button-rounded p-button-success mr-2"
+                                    (click)="editDonar(donar)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                                    (click)="deleteDonar(donar)"></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <p-dialog [(visible)]="donarDialog" [style]="{width: '450px'}" header="Donar Details" [modal]="true"
+            class="p-fluid">
+            <ng-template pTemplate="content">
+                <div class="field">
+                    <label for="name">Name</label>
+                    <input type="text" pInputText id="name" [(ngModel)]="donar.name" required autofocus
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !donar.name}" />
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !donar.name">Name is required.</small>
+                </div>
+                <div class="field">
+                    <label for="dob">Date of Birth </label>
+                    <input type="date" pInputText id="dob" [(ngModel)]="donar.dob" required autofocus
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !donar.dob}" />
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !donar.dob">Date of Birth is required.</small>
+                </div>
+                <div class="field">
+                    <label for="gender">Gender</label>
+                    <p-dropdown [(ngModel)]="donar.gender" inputId="class" optionValue="value" [options]="genders"
+                        placeholder="Select Gender">
+                        <ng-template pTemplate="selectedItem">
+                            {{donar.gender}}
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+                <div class="field">
+                    <label for="group">Blood Group</label>
+                    <p-dropdown [(ngModel)]="donar.group" inputId="class" optionValue="value" [options]="groups"
+                        placeholder="Choose Blood Group">
+                        <ng-template pTemplate="selectedItem">
+                            {{donar.group}}
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+                <div class="field">
+                    <label for="fathername">Father's Name</label>
+                    <input type="text" pInputText id="fathername" [(ngModel)]="donar.fathername" required autofocus
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !donar.fathername}" />
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !donar.fathername">Father's Name is required.</small>
+                </div>
+            
+
+                <div class="field">
+                    <label for="mobile">Mobile</label>
+                    <p-inputMask mask="9999999999" placeholder="9999999999" id="mobile" [(ngModel)]="donar.mobile"
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !donar.mobile}"></p-inputMask>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !donar.mobile">Mobile No is
+                        required.</small>
+                </div>
+                <div class="field">
+                    <label for="email">E-Mail</label>
+                    <input type="email" pInputText id="email" [(ngModel)]="donar.email" required autofocus
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !donar.email}" />
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !donar.email">E-Mail is required.</small>
+                </div>
+                <div class="field">
+                    <label for="state">State</label>
+                    <p-dropdown [(ngModel)]="donar.state" inputId="class" optionValue="value" [options]="states"
+                        placeholder="Select State">
+                        <ng-template pTemplate="selectedItem">
+                            {{donar.state}}
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+                <div class="field">
+                    <label for="district">District</label>
+                    <p-dropdown [(ngModel)]="donar.district" inputId="class" optionValue="value" [options]="districts"
+                        placeholder="Select District">
+                        <ng-template pTemplate="selectedItem">
+                            {{donar.district}}
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+                <div class="field">
+                    <label for="address">Address</label>
+                    <input type="text" pInputText id="address" [(ngModel)]="donar.address" required autofocus
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !donar.address}" />
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !donar.address">Address is required.</small>
+                </div>
+                <div class="field">
+                    <label for="pincode">Pincode</label>
+                    <input type="text" pInputText id="pincode" [(ngModel)]="donar.pincode" required autofocus
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !donar.pincode}" />
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !donar.pincode">Pincode is required.</small>
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
+                    (click)="hideDialog()"></button>
+                <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"
+                    (click)="saveDonar()"></button>
+            </ng-template>
+        </p-dialog>
+
+
+
+        <p-dialog [(visible)]="donarViewDialog" [style]="{width: '450px'}" header="Donar Details" [modal]="true"
+            class="p-fluid">
+            <ng-template pTemplate="content">
+                <div class="field">
+                    <label for="name">Name</label>
+                    <input type="text" pInputText id="name" [(ngModel)]="donar.name" readonly required autofocus />
+                </div>
+                <div class="field">
+                    <label for="dob">DOB</label>
+                    <input type="text" pInputText id="dob" [(ngModel)]="donar.dob" readonly required autofocus />
+                </div>
+                <div class="field">
+                    <label for="gender">Gender</label>
+                    <input type="text" pInputText id="gender" [(ngModel)]="donar.gender" readonly required autofocus />
+                </div>
+                <div class="field">
+                    <label for="fathername">Father's Name</label>
+                    <input type="text" pInputText id="fathername" [(ngModel)]="donar.fathername" readonly required autofocus />
+                </div>
+                <div class="field">
+                    <label for="mobile">Mobile</label>
+                    <input type="text" pInputText id="mobile" [(ngModel)]="donar.mobile" readonly required autofocus />
+                </div>
+                <div class="field">
+                    <label for="email">Email</label>
+                    <input type="text" pInputText id="email" [(ngModel)]="donar.email" readonly required autofocus />
+                </div>
+                <div class="field">
+                    <label for="state">State</label>
+                    <input type="text" pInputText id="state" [(ngModel)]="donar.state" readonly required autofocus />
+                </div>
+                <div class="field">
+                    <label for="district">Gender</label>
+                    <input type="text" pInputText id="district" [(ngModel)]="donar.district" readonly required autofocus />
+                </div>
+                <div class="field">
+                    <label for="address">Address</label>
+                    <input type="text" pInputText id="address" [(ngModel)]="donar.address" readonly required autofocus />
+                </div>
+                <div class="field">
+                    <label for="pincode">Pincode</label>
+                    <input type="text" pInputText id="pincode" [(ngModel)]="donar.pincode" readonly required autofocus />
+                </div>
+                
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="Close" icon="pi pi-times" class="p-button-text"
+                    (click)="hideDialog()"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="deleteDonarDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span *ngIf="donar">Are you sure you want to delete <b>{{donar.name}}</b>?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
+                    (click)="deleteDonarDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes"
+                    (click)="confirmDelete()"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="deleteDonarsDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span>Are you sure you want to delete selected donars?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
+                    (click)="deleteDonarsDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes"
+                    (click)="confirmDeleteSelected()"></button>
+            </ng-template>
+        </p-dialog>
+    </div>
+</div>
