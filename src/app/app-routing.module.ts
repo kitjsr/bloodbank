@@ -2,6 +2,7 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { NotfoundComponent } from './demo/components/notfound/notfound.component';
 import { AppLayoutComponent } from "./layout/app.layout.component";
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
     imports: [
@@ -10,7 +11,7 @@ import { AppLayoutComponent } from "./layout/app.layout.component";
                 path: '', component: AppLayoutComponent,
                 children: [
                     { path: '', loadChildren: () => import('./demo/components/dashboard/dashboard.module').then(m => m.DashboardModule) },
-                    
+                    { path: 'register', component: RegisterComponent },
                     // blood bank
                     { path: 'donars', loadChildren: () => import('./component/donars/donars.module').then(m => m.DonarsModule) },             
                     { path: 'directorys', loadChildren: () => import('./component/directorys/directorys.module').then(m => m.DirectorysModule) },             

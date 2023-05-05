@@ -8,7 +8,7 @@ import autoTable from 'jspdf-autotable';
 
 import { Donar } from './donar';
 import { DonarService } from '../../services/donar.service';
-
+import { UserService } from '../../_services/user.service';
 
 @Component({
     templateUrl: './donars.component.html',
@@ -33,7 +33,8 @@ export class DonarsComponent implements OnInit {
 
     constructor(
         private messageService: MessageService,
-        private donarService: DonarService
+        private donarService: DonarService,
+        private userService: UserService
     ) {}
 
     ngOnInit() {

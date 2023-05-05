@@ -36,32 +36,27 @@
                 </ng-template>
                 <ng-template pTemplate="header">
                     <tr>
-                        <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon>
+                        <th pSortableColumn="name">Blood Bank <p-sortIcon field="name"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="bloodbank">Blood bank <p-sortIcon field="bloodbank"></p-sortIcon>
+                        <th pSortableColumn="bloodbank">Donar Name <p-sortIcon field="bloodbank"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="group">Group<p-sortIcon field="group"></p-sortIcon>
+                        <th pSortableColumn="bloodbank">Blood Group<p-sortIcon field="bloodbank"></p-sortIcon>
                         </th>
                         <th pSortableColumn="mobile">Mobile<p-sortIcon field="mobile"></p-sortIcon>
                         </th>
                         <th pSortableColumn="date">date
 								<p-columnFilter type="date" field="date" display="menu" placeholder="mm/dd/yyyy"></p-columnFilter>
                         </th>
-                        <th pSortableColumn="dob">Expiry Date<p-sortIcon field="dob"></p-sortIcon>
-                        </th>
+                        
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-donationreport>
                     <tr>
-                        
-                        <td>{{donationreport.donar.name}}</td>
-                        <!-- <td>{{donationreport.donar.name}}</td> -->
-                        <td>{{donationreport.donar.mobile}}</td>
-                        <td>{{donationreport.plan}} Month</td>
+                        <td>{{donationreport.directories.name}}</td>
+                        <td>{{donationreport.donars.name}}</td>
+                        <td>{{donationreport.donars.group}}</td>
+                        <td>{{donationreport.donars.mobile}}</td>
                         <td>{{donationreport.createdAt | date:"dd/MM/yyyy"}}</td>
-                        <td>{{donationreport.createdAt | date:"dd/MM/yyyy"}}</td>
-                        <!-- <td>{{expiryDate(subreport.createdAt)}}</td> -->
-                        
                     </tr>
                 </ng-template>
             </p-table>
