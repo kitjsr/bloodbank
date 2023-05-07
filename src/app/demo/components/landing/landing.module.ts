@@ -7,7 +7,8 @@ import { DividerModule } from 'primeng/divider';
 import { ChartModule } from 'primeng/chart';
 import { PanelModule } from 'primeng/panel';
 import { ButtonModule } from 'primeng/button';
-
+import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
+// import { BrowserModule } from '@angular/platform-browser';
 @NgModule({
     imports: [
         CommonModule,
@@ -16,7 +17,8 @@ import { ButtonModule } from 'primeng/button';
         StyleClassModule,
         ChartModule,
         PanelModule,
-        ButtonModule
+        ButtonModule,
+            FormsModule
     ],
     declarations: [LandingComponent]
 })

@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { NotfoundComponent } from './demo/components/notfound/notfound.component';
 import { AppLayoutComponent } from "./layout/app.layout.component";
 import { RegisterComponent } from './register/register.component';
+// import { LoginComponent } from './demo/components/auth/login/login.component';
 
 @NgModule({
     imports: [
@@ -30,7 +31,8 @@ import { RegisterComponent } from './register/register.component';
 
 
                     { path: 'students', loadChildren: () => import('./components/students/students.module').then(m => m.StudentsModule) },
-                    { path: 'login', loadChildren: () => import('./component/login/login.module').then(m => m.LoginModule) },
+                    // { path: 'login', loadChildren: () => import('../app/demo/components/auth/login/login.module').then(m => m.LoginModule) },
+                    // { path: 'login',  component: LoginComponent  },
                     { path: 'members', loadChildren: () => import('./component/members/members.module').then(m => m.MembersModule) },
                     { path: 'tc', loadChildren: () => import('./components/tc/tc.module').then(m => m.TcModule) },
                     { path: 'uikit', loadChildren: () => import('./demo/components/uikit/uikit.module').then(m => m.UIkitModule) },
