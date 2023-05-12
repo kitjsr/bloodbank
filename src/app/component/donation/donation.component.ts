@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Product } from 'src/app/demo/api/product';
 import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { MemberService } from '../../services/member.service';
@@ -47,21 +46,12 @@ export class DonationComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.retrieveAllDonations();
+        
         this.retrieveDonars();
         this.retrieveDirectorys();
     }
 
-    retrieveAllDonations(): void {
-        this.donationService.getAllDonation().subscribe(
-            (data) => {
-                this.donations = data;
-            },
-            (error) => {
-                console.log(error);
-            }
-        );
-    }
+    
     retrieveDonars(): void {
         this.donarService.getAll().subscribe(
             (data) => {

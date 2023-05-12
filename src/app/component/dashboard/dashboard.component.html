@@ -1,4 +1,3 @@
-<div class="surface-ground px-4 py-5 md:px-6 lg:px-8">
     <div class="grid">
         <div class="col-12 md:col-6 lg:col-3">
             <div class="surface-card shadow-2 p-3 border-round">
@@ -65,37 +64,40 @@
             </div>
         </div>
     </div>
-</div>
+
 <div class="grid">
     <div class="col-12 xl:col-6">
         <div class="card">
-            <h5>Recent Subscriptions</h5>
-            <p-table [value]="subreports" [paginator]="true" [rows]="5" responsiveLayout="scroll">
+            <h5>Recent Donations</h5>
+            <p-table id="my-table" #dt [value]="donationreports" responsiveLayout="scroll"  
+                [globalFilterFields]="['name','bloodbank','group','date']" [rows]="10" [paginator]="true"
+                [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                 [rowHover]="true" dataKey="id">
+                
                 <ng-template pTemplate="header">
                     <tr>
-                        <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon>
+                        <th pSortableColumn="name">Blood Bank <p-sortIcon field="name"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="bloodbank">Donar Name <p-sortIcon field="bloodbank"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="bloodbank">Blood Group<p-sortIcon field="bloodbank"></p-sortIcon>
                         </th>
                         <th pSortableColumn="mobile">Mobile<p-sortIcon field="mobile"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="dob">Plan<p-sortIcon field="dob"></p-sortIcon>
+                        <th pSortableColumn="date">date
+								<p-columnFilter type="date" field="date" display="menu" placeholder="mm/dd/yyyy"></p-columnFilter>
                         </th>
-                        <th pSortableColumn="dob">date
-                            <p-columnFilter type="date" field="date" display="menu"
-                                placeholder="mm/dd/yyyy"></p-columnFilter>
-                        </th>
-                        <th pSortableColumn="dob">Expiry Date<p-sortIcon field="dob"></p-sortIcon>
-                        </th>
+                        
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-subreport>
+                <ng-template pTemplate="body" let-donationreport>
                     <tr>
-
-                        <td>{{subreport.member.name}}</td>
-                        <td>{{subreport.member.mobile}}</td>
-                        <td>{{subreport.plan}} Month</td>
-                        <td>{{subreport.createdAt | date:"dd/MM/yyyy"}}</td>
-                        <td>{{subreport.createdAt | date:"dd/MM/yyyy"}}</td>
-
+                        <td>{{donationreport.directories.name}}</td>
+                        <td>{{donationreport.donars.name}}</td>
+                        <td>{{donationreport.donars.group}}</td>
+                        <td>{{donationreport.donars.mobile}}</td>
+                        <td>{{donationreport.createdAt | date:"dd/MM/yyyy"}}</td>
                     </tr>
                 </ng-template>
             </p-table>
@@ -105,8 +107,10 @@
     </div>
     <div class="col-12 xl:col-6">
         <div class="card">
-            <h5>Sales Overview</h5>
-            <p-chart type="line" [data]="chartData" [options]="chartOptions"></p-chart>
+            <h5>Stock of Blood Groups</h5>
+            <p-chart type="bar" [data]="chartData" [options]="chartOptions"></p-chart>
         </div>
     </div>
 </div>
+
+

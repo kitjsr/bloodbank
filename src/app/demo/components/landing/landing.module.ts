@@ -8,6 +8,9 @@ import { ChartModule } from 'primeng/chart';
 import { PanelModule } from 'primeng/panel';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
+import { RippleModule } from 'primeng/ripple';
+import { SplitButtonModule } from 'primeng/splitbutton';
+import { ToggleButtonModule } from 'primeng/togglebutton';
 // import { BrowserModule } from '@angular/platform-browser';
 @NgModule({
     imports: [
@@ -18,6 +21,9 @@ import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
         ChartModule,
         PanelModule,
         ButtonModule,
+		RippleModule,
+		SplitButtonModule,
+		ToggleButtonModule,
             FormsModule
     ],
     declarations: [LandingComponent]

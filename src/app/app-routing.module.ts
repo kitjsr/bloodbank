@@ -19,6 +19,7 @@ import { RegisterComponent } from './register/register.component';
                     { path: 'stocks', loadChildren: () => import('./component/stocks/stocks.module').then(m => m.StocksModule) },             
                     { path: 'donation', loadChildren: () => import('./component/donation/donation.module').then(m => m.DonationModule) },             
                     { path: 'donationreport', loadChildren: () => import('./component/donationreport/donationreport.module').then(m => m.DonationreportModule) },             
+                    // { path: 'login', loadChildren: () => import('./login/login.module').then(m => m.LoginModule) },             
 
                     // gym related:
                     { path: 'members', loadChildren: () => import('./component/members/members.module').then(m => m.MembersModule) },             

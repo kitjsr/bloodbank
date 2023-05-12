@@ -16,12 +16,12 @@ export class AppMenuComponent implements OnInit {
         this.model = [
             {
                 label: 'Home',
-                items: [
-                    { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] }
-                ]
+                // items: [
+                //     { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] }
+                // ]
             },
             {
-                label: 'UI Components',
+                // label: 'UI Components',
                 items: [
                     { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/dashboard'] },
                     { label: 'Donars', icon: 'pi pi-fw pi-home', routerLink: ['/donars'] },
@@ -32,7 +32,7 @@ export class AppMenuComponent implements OnInit {
                     // { label: 'Trainers', icon: 'pi pi-fw pi-id-card', routerLink: ['/trainers'] },
                     // { label: 'Members', icon: 'pi pi-fw pi-id-card', routerLink: ['/members'] },
                     // { label: 'Subscription', icon: 'pi pi-fw pi-check-square', routerLink: ['/subscription'] },
-                    // { label: 'Login', icon: 'pi pi-fw pi-sign-in', routerLink: ['/login'] },
+                    { label: 'Logout', icon: 'pi pi-fw pi-sign-in', routerLink: ['/login'] },
                     // { label: 'Alumni', icon: 'pi pi-fw pi-sign-in', routerLink: ['/alumnis'] },
                     // { label: 'Subreports', icon: 'pi pi-fw pi-sign-in', routerLink: ['/subreports'] },
                     // { label: 'Notice', icon: 'pi pi-fw pi-sign-in', routerLink: ['/notice'] },
