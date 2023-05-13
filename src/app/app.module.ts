@@ -18,20 +18,22 @@ import { BoardUserComponent } from './board-user/board-user.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
-import { RegisterComponent } from './register/register.component';
+// import { RegisterComponent } from './register/register.component';
 import { HttpClientModule } from '@angular/common/http';
 import { httpInterceptorProviders } from './_helpers/http.interceptor';
+// import { RegistrationComponent } from './demo/components/registration/registration.component';
 
 @NgModule({
     declarations: [
         AppComponent, NotfoundComponent,
         LoginComponent,
-        RegisterComponent,
+        // RegisterComponent,
         HomeComponent,
         ProfileComponent,
         BoardAdminComponent,
         BoardModeratorComponent,
         BoardUserComponent
+        // RegistrationComponent
     ],
     imports: [
         AppRoutingModule,
