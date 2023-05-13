@@ -2,6 +2,10 @@ import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
 import { LayoutService } from './service/app.layout.service';
 
+import { Subscription } from 'rxjs';
+import { StorageService } from '../_services/storage.service';
+import { AuthService } from '../_services/auth.service';
+import { EventBusService } from '../_shared/event-bus.service';
 @Component({
     selector: 'app-menu',
     templateUrl: './app.menu.component.html'
@@ -9,10 +13,34 @@ import { LayoutService } from './service/app.layout.service';
 export class AppMenuComponent implements OnInit {
 
     model: any[] = [];
+    private roles: string[] = [];
+    isLoggedIn = false;
+    showAdminBoard = false;
+    showModeratorBoard = false;
+    username?: string;
+  
+    eventBusSub?: Subscription;
 
-    constructor(public layoutService: LayoutService) { }
+    constructor(public layoutService: LayoutService, private storageService: StorageService,
+        private authService: AuthService,
+        private eventBusService: EventBusService) { }
+ ngOnInit(): void {
+    this.isLoggedIn = this.storageService.isLoggedIn();
 
-    ngOnInit() {
+    if (this.isLoggedIn) {
+      const user = this.storageService.getUser();
+      this.roles = user.roles;
+
+      this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
+      this.showModeratorBoard = this.roles.includes('ROLE_MODERATOR');
+
+      this.username = user.username;
+    }
+
+    this.eventBusSub = this.eventBusService.on('logout', () => {
+      this.logout();
+    });
+  
         this.model = [
             {
                 label: 'Home',
@@ -32,7 +60,7 @@ export class AppMenuComponent implements OnInit {
                     // { label: 'Trainers', icon: 'pi pi-fw pi-id-card', routerLink: ['/trainers'] },
                     // { label: 'Members', icon: 'pi pi-fw pi-id-card', routerLink: ['/members'] },
                     // { label: 'Subscription', icon: 'pi pi-fw pi-check-square', routerLink: ['/subscription'] },
-                    { label: 'Logout', icon: 'pi pi-fw pi-sign-in', routerLink: ['/login'] },
+                    // { label: 'Logout', icon: 'pi pi-fw pi-sign-in', routerLink: ['/logout'] },
                     // { label: 'Alumni', icon: 'pi pi-fw pi-sign-in', routerLink: ['/alumnis'] },
                     // { label: 'Subreports', icon: 'pi pi-fw pi-sign-in', routerLink: ['/subreports'] },
                     // { label: 'Notice', icon: 'pi pi-fw pi-sign-in', routerLink: ['/notice'] },
@@ -177,6 +205,19 @@ export class AppMenuComponent implements OnInit {
             // }
         ]
     }
+    logout(): void {
+        this.authService.logout().subscribe({
+          next: res => {
+            console.log(res);
+            this.storageService.clean();
+    
+            window.location.reload();
+          },
+          error: err => {
+            console.log(err);
+          }
+        });
+      }
 }
     
 

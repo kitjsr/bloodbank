@@ -19,7 +19,7 @@ export class LandingComponent implements OnInit {
     errorMessage = '';
     roles: string[] = [];
   
-    constructor(private authService: AuthService, private storageService: StorageService,public layoutService: LayoutService, public router: Router) { }
+    constructor( private authService: AuthService, private storageService: StorageService,public layoutService: LayoutService, public router: Router) { }
   
     // constructor() { }
     ngOnInit(): void {
@@ -49,7 +49,11 @@ export class LandingComponent implements OnInit {
     }
   
     reloadPage(): void {
-      window.location.reload();
+      // window.location.reload();
+      this.router.navigate(['/dashboard']);
+      // if(Object.keys(this.currentUser).length===0){
+      //   this.router.navigate(['/landing']);
+      // }
     }
   }
   

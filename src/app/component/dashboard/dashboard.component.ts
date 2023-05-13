@@ -5,6 +5,9 @@ import { DonationService } from '../../services/donation.service';
 import { DonarService } from '../../services/donar.service';
 import { DirectoryService } from '../../services/directory.service';
 import { Donationreport } from '../donationreport/donationreport';
+
+import { StorageService } from '../../_services/storage.service';
+import { Router } from "@angular/router";
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
@@ -22,12 +25,14 @@ export class DashboardComponent implements OnInit {
     countdonars: any;
     countdirectorys: any;
     countdonations: any;
+    currentUser: any;
     constructor(
         
         public layoutService: LayoutService,
         private directoryService: DirectoryService,
         private donarService: DonarService,
-        private donationService: DonationService
+        private donationService: DonationService,
+        private storageService: StorageService,private router: Router
 
     ) {
     
@@ -37,6 +42,10 @@ export class DashboardComponent implements OnInit {
         this.initChart();
         this.retrieveDonarsCount();
         this.retrieveDirectorysCount();
+        this.currentUser = this.storageService.getUser();
+        if(Object.keys(this.currentUser).length===0){
+            this.router.navigate(['/landing']);
+          }
     }
     initChart() {
         const documentStyle = getComputedStyle(document.documentElement);
