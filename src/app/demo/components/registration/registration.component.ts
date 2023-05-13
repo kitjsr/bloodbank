@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../_services/auth.service';
-import { StorageService } from '../../../_services/storage.service';
-import { Router } from '@angular/router';
-import { LayoutService } from 'src/app/layout/service/app.layout.service';
+
 
 @Component({
     selector: 'app-landing',
