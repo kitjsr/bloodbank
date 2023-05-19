@@ -26,13 +26,17 @@ export class DashboardComponent implements OnInit {
     countdirectorys: any;
     countdonations: any;
     currentUser: any;
+    donar="ROLE_USER";
+    bloodbank="ROLE_MODERATOR";
+    admin="ROLE_ADMIN";
     constructor(
         
         public layoutService: LayoutService,
         private directoryService: DirectoryService,
         private donarService: DonarService,
         private donationService: DonationService,
-        private storageService: StorageService,private router: Router
+        private storageService: StorageService,
+        private router: Router
 
     ) {
     
