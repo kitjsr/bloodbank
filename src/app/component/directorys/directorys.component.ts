@@ -26,7 +26,6 @@ export class DirectorysComponent implements OnInit {
     categorys: any[] = [];
     // groups: any[] = [];
     rowsPerPageOptions = [5, 10, 20];
-    currentUser: any;
 
     constructor(
         private messageService: MessageService,
@@ -35,19 +34,6 @@ export class DirectorysComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        // Fetch Login User Details
-        this.currentUser = this.storageService.getUser();
-        // Check User login or not
-        // If user not login then redirect to login page
-        if(Object.keys(this.currentUser).length===0){
-            this.router.navigate(['/landing']);
-          }
-        
-       
-        // If login user is Donar then redirect to Dashboard
-        if(this.currentUser.roles[0]==="ROLE_USER"){
-            this.router.navigate(['/dashboard']);
-          }
         this.retrieveDirectorys();
         this.categorys = [
           { label: 'Govt.', value: 'Govt.' },

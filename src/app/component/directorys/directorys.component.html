@@ -43,10 +43,7 @@
                         </th>
                         <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon>
                         </th>
-                        <!-- <th pSortableColumn="availability"> Availability <p-sortIcon field="availability"></p-sortIcon> 
-                        </th>
-                        <th pSortableColumn="group"> Blood Group <p-sortIcon field="group"></p-sortIcon> 
-                        </th> -->
+                       
                         <th pSortableColumn="mobile">Mobile<p-sortIcon field="mobile"></p-sortIcon>
                         </th>
                         <th pSortableColumn="category">Category<p-sortIcon field="category"></p-sortIcon>
@@ -59,8 +56,7 @@
                             <p-tableCheckbox [value]="directory"></p-tableCheckbox>
                         </td>
                         <td>{{directory.name}}</td>
-                        <!-- <td>{{directory.availability}}</td> -->
-                        <!-- <td>{{directory.group}}</td> -->
+                       
                         <td>{{directory.mobile}}</td>
                         <td>{{directory.category}}</td>
                         <td>
@@ -80,55 +76,74 @@
             </p-table>
         </div>
 
-        <p-dialog [(visible)]="directoryDialog" [style]="{width: '450px'}" header="Directory Details" [modal]="true"
+        <p-dialog [(visible)]="directoryDialog" [style]="{width: '1000px'}" header="Directory Details" [modal]="true"
             class="p-fluid">
             <ng-template pTemplate="content">
-                <div class="field">
-                    <label for="name">Blood Bank Name</label>
-                    <input type="text" pInputText id="name" [(ngModel)]="directory.name" required autofocus
-                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !directory.name}" />
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !directory.name">Name is required.</small>
-                </div>
-                
-                <div class="field">
-                    <label for="state">State </label>
-                    <input type="text" pInputText id="state" [(ngModel)]="directory.state" required autofocus
-                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !directory.state}" />
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !directory.state">State is required.</small>
-                </div>
-                <div class="field">
-                    <label for="district">District </label>
-                    <input type="text" pInputText id="district" [(ngModel)]="directory.district" required autofocus
-                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !directory.district}" />
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !directory.district">District is required.</small>
-                </div>
-                <div class="field">
-                    <label for="address">Address</label>
-                    <input type="text" pInputText id="address" [(ngModel)]="directory.address" required autofocus
-                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !directory.address}" />
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !directory.address">Address is required.</small>
-                </div>
-                <div class="field">
-                    <label for="mobile">Mobile</label>
-                    <p-inputMask mask="9999999999" placeholder="9999999999" id="mobile" [(ngModel)]="directory.mobile"
-                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !directory.mobile}"></p-inputMask>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !directory.mobile">Mobile No is
-                        required.</small>
-                </div>
-                <div class="field">
-                    <label for="email">E-Mail</label>
-                    <input type="email" pInputText id="email" [(ngModel)]="directory.email" required autofocus
-                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !directory.email}" />
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !directory.email">E-Mail is required.</small>
-                </div>
-                <div class="field">
-                    <label for="category"> Category</label>
-                    <p-dropdown [(ngModel)]="directory.category" inputId="class" optionValue="value" [options]="categorys"
-                        placeholder="Choose Category">
-                        <ng-template pTemplate="selectedItem">
-                            {{directory.category}}
-                        </ng-template>
-                    </p-dropdown>
+                <div class="col-12">
+                    <div class="card">
+                        <div class="grid">
+                            <div class="col-12 md:col-6">
+                                <div class="field">
+                                    <label for="name">Blood Bank Name</label>
+                                    <input type="text" pInputText id="name" [(ngModel)]="directory.name" required autofocus
+                                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !directory.name}" />
+                                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !directory.name">Name is required.</small>
+                                </div>
+                            </div>
+                            <div class="col-12 md:col-6">
+                                <div class="field">
+                                    <label for="state">State </label>
+                                    <input type="text" pInputText id="state" [(ngModel)]="directory.state" required autofocus
+                                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !directory.state}" />
+                                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !directory.state">State is required.</small>
+                                </div>
+                            </div>
+                            <div class="col-12 md:col-6">
+                                <div class="field">
+                                    <label for="district">District </label>
+                                    <input type="text" pInputText id="district" [(ngModel)]="directory.district" required autofocus
+                                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !directory.district}" />
+                                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !directory.district">District is required.</small>
+                                </div>
+                            </div>
+                            <div class="col-12 md:col-6">
+                                <div class="field">
+                                    <label for="address">Address</label>
+                                    <input type="text" pInputText id="address" [(ngModel)]="directory.address" required autofocus
+                                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !directory.address}" />
+                                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !directory.address">Address is required.</small>
+                                </div>
+                            </div>
+                            <div class="col-12 md:col-6">
+                                <div class="field">
+                                    <label for="mobile">Mobile</label>
+                                    <p-inputMask mask="9999999999" placeholder="9999999999" id="mobile" [(ngModel)]="directory.mobile"
+                                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !directory.mobile}"></p-inputMask>
+                                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !directory.mobile">Mobile No is
+                                        required.</small>
+                                </div>
+                            </div>
+                            <div class="col-12 md:col-6">
+                                <div class="field">
+                                    <label for="email">E-Mail</label>
+                                    <input type="email" pInputText id="email" [(ngModel)]="directory.email" required autofocus
+                                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !directory.email}" />
+                                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !directory.email">E-Mail is required.</small>
+                                </div>
+                            </div>
+                            <div class="col-12 md:col-6">
+                                <div class="field">
+                                    <label for="category"> Category</label>
+                                    <p-dropdown [(ngModel)]="directory.category" inputId="class" optionValue="value" [options]="categorys"
+                                        placeholder="Choose Category">
+                                        <ng-template pTemplate="selectedItem">
+                                            {{directory.category}}
+                                        </ng-template>
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </ng-template>
 
@@ -142,28 +157,44 @@
 
 
 
-        <p-dialog [(visible)]="directoryViewDialog" [style]="{width: '450px'}" header="Directory Details" [modal]="true"
+        <p-dialog [(visible)]="directoryViewDialog" [style]="{width: '1000px'}" header="Directory Details" [modal]="true"
             class="p-fluid">
             <ng-template pTemplate="content">
-                <div class="field">
-                    <label for="name">Blood Bank Name</label>
-                    <input type="text" pInputText id="name" [(ngModel)]="directory.name" readonly required autofocus />
-                </div>
-                <div class="field">
-                    <label for="address">Address</label>
-                    <input type="text" pInputText id="address" [(ngModel)]="directory.address" readonly required autofocus />
-                </div>
-                <div class="field">
-                    <label for="mobile">Mobile</label>
-                    <input type="text" pInputText id="mobile" [(ngModel)]="directory.mobile" readonly required autofocus />
-                </div>
-                <div class="field">
-                    <label for="email">Email</label>
-                    <input type="text" pInputText id="email" [(ngModel)]="directory.email" readonly required autofocus />
-                </div>
-                <div class="field">
-                    <label for="category">Category</label>
-                    <input type="text" pInputText id="pincode" [(ngModel)]="directory.category" readonly required autofocus />
+                <div class="col-12">
+                    <div class="card">
+                        <div class="grid">
+                            <div class="col-12 md:col-6">
+                                <div class="field">
+                                    <label for="name">Blood Bank Name</label>
+                                    <input type="text" pInputText id="name" [(ngModel)]="directory.name" readonly required autofocus />
+                                </div>
+                            </div>
+                            <div class="col-12 md:col-6">
+                                <div class="field">
+                                    <label for="address">Address</label>
+                                    <input type="text" pInputText id="address" [(ngModel)]="directory.address" readonly required autofocus />
+                                </div>
+                            </div>
+                            <div class="col-12 md:col-6">
+                                <div class="field">
+                                    <label for="mobile">Mobile</label>
+                                    <input type="text" pInputText id="mobile" [(ngModel)]="directory.mobile" readonly required autofocus />
+                                </div>
+                            </div>
+                            <div class="col-12 md:col-6">
+                                <div class="field">
+                                    <label for="email">Email</label>
+                                    <input type="text" pInputText id="email" [(ngModel)]="directory.email" readonly required autofocus />
+                                </div>
+                            </div>
+                            <div class="col-12 md:col-6">
+                                <div class="field">
+                                    <label for="category">Category</label>
+                                    <input type="text" pInputText id="pincode" [(ngModel)]="directory.category" readonly required autofocus />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </ng-template>
 

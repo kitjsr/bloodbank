@@ -77,89 +77,115 @@
             </p-table>
         </div>
 
-        <p-dialog [(visible)]="donarDialog" [style]="{width: '450px'}" header="Donar Details" [modal]="true"
+        <p-dialog [(visible)]="donarDialog" [style]="{width: '1000px'}" header="Donar Details" [modal]="true"
             class="p-fluid">
             <ng-template pTemplate="content">
-                <div class="field">
-                    <label for="name">Name</label>
-                    <input type="text" pInputText id="name" [(ngModel)]="donar.name" required autofocus
-                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !donar.name}" />
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !donar.name">Name is required.</small>
-                </div>
-                <div class="field">
-                    <label for="dob">Date of Birth </label>
-                    <input type="date" pInputText id="dob" [(ngModel)]="donar.dob" required autofocus
-                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !donar.dob}" />
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !donar.dob">Date of Birth is required.</small>
-                </div>
-                <div class="field">
-                    <label for="gender">Gender</label>
-                    <p-dropdown [(ngModel)]="donar.gender" inputId="class" optionValue="value" [options]="genders"
-                        placeholder="Select Gender">
-                        <ng-template pTemplate="selectedItem">
-                            {{donar.gender}}
-                        </ng-template>
-                    </p-dropdown>
-                </div>
-                <div class="field">
-                    <label for="group">Blood Group</label>
-                    <p-dropdown [(ngModel)]="donar.group" inputId="class" optionValue="value" [options]="groups"
-                        placeholder="Choose Blood Group">
-                        <ng-template pTemplate="selectedItem">
-                            {{donar.group}}
-                        </ng-template>
-                    </p-dropdown>
-                </div>
-                <div class="field">
-                    <label for="fathername">Father's Name</label>
-                    <input type="text" pInputText id="fathername" [(ngModel)]="donar.fathername" required autofocus
-                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !donar.fathername}" />
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !donar.fathername">Father's Name is required.</small>
-                </div>
-            
-
-                <div class="field">
-                    <label for="mobile">Mobile</label>
-                    <p-inputMask mask="9999999999" placeholder="9999999999" id="mobile" [(ngModel)]="donar.mobile"
-                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !donar.mobile}"></p-inputMask>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !donar.mobile">Mobile No is
-                        required.</small>
-                </div>
-                <div class="field">
-                    <label for="email">E-Mail</label>
-                    <input type="email" pInputText id="email" [(ngModel)]="donar.email" required autofocus
-                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !donar.email}" />
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !donar.email">E-Mail is required.</small>
-                </div>
-                <div class="field">
-                    <label for="state">State</label>
-                    <p-dropdown [(ngModel)]="donar.state" inputId="class" optionValue="value" [options]="states"
-                        placeholder="Select State">
-                        <ng-template pTemplate="selectedItem">
-                            {{donar.state}}
-                        </ng-template>
-                    </p-dropdown>
-                </div>
-                <div class="field">
-                    <label for="district">District</label>
-                    <p-dropdown [(ngModel)]="donar.district" inputId="class" optionValue="value" [options]="districts"
-                        placeholder="Select District">
-                        <ng-template pTemplate="selectedItem">
-                            {{donar.district}}
-                        </ng-template>
-                    </p-dropdown>
-                </div>
-                <div class="field">
-                    <label for="address">Address</label>
-                    <input type="text" pInputText id="address" [(ngModel)]="donar.address" required autofocus
-                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !donar.address}" />
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !donar.address">Address is required.</small>
-                </div>
-                <div class="field">
-                    <label for="pincode">Pincode</label>
-                    <input type="text" pInputText id="pincode" [(ngModel)]="donar.pincode" required autofocus
-                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !donar.pincode}" />
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !donar.pincode">Pincode is required.</small>
+                <div class="col-12">
+                    <div class="card">
+                        <div class="grid">
+                            <div class="col-12 md:col-6 ">
+                                <div class="field">
+                                    <label for="name">Name</label>
+                                    <input type="text" pInputText id="name" [(ngModel)]="donar.name" required autofocus
+                                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !donar.name}" />
+                                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !donar.name">Name is required.</small>
+                                </div>
+                            </div>
+                            <div class="col-12 md:col-6">
+                                <div class="field">
+                                    <label for="dob">Date of Birth </label>
+                                    <input type="date" pInputText id="dob" [(ngModel)]="donar.dob" required autofocus
+                                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !donar.dob}" />
+                                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !donar.dob">Date of Birth is required.</small>
+                                </div>
+                            </div>
+                            <div class="col-12 md:col-6">
+                                <div class="field">
+                                    <label for="gender">Gender</label>
+                                    <p-dropdown [(ngModel)]="donar.gender" inputId="class" optionValue="value" [options]="genders"
+                                        placeholder="Select Gender">
+                                        <ng-template pTemplate="selectedItem">
+                                            {{donar.gender}}
+                                        </ng-template>
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                            <div class="col-12 md:col-6">
+                                <div class="field">
+                                    <label for="group">Blood Group</label>
+                                    <p-dropdown [(ngModel)]="donar.group" inputId="class" optionValue="value" [options]="groups"
+                                        placeholder="Choose Blood Group">
+                                        <ng-template pTemplate="selectedItem">
+                                            {{donar.group}}
+                                        </ng-template>
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                            <div class="col-12 md:col-6">
+                                <div class="field">
+                                    <label for="fathername">Father's Name</label>
+                                    <input type="text" pInputText id="fathername" [(ngModel)]="donar.fathername" required autofocus
+                                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !donar.fathername}" />
+                                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !donar.fathername">Father's Name is required.</small>
+                                </div>
+                            </div>
+                            <div class="col-12 md:col-6">
+                                <div class="field">
+                                    <label for="mobile">Mobile</label>
+                                    <p-inputMask mask="9999999999" placeholder="9999999999" id="mobile" [(ngModel)]="donar.mobile"
+                                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !donar.mobile}"></p-inputMask>
+                                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !donar.mobile">Mobile No is
+                                        required.</small>
+                                </div>
+                            </div>
+                            <div class="col-12 md:col-6">
+                                <div class="field">
+                                    <label for="email">E-Mail</label>
+                                    <input type="email" pInputText id="email" [(ngModel)]="donar.email" required autofocus
+                                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !donar.email}" />
+                                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !donar.email">E-Mail is required.</small>
+                                </div>
+                            </div>
+                            <div class="col-12 md:col-6">
+                                <div class="field">
+                                    <label for="state">State</label>
+                                    <p-dropdown [(ngModel)]="donar.state" inputId="class" optionValue="value" [options]="states"
+                                        placeholder="Select State">
+                                        <ng-template pTemplate="selectedItem">
+                                            {{donar.state}}
+                                        </ng-template>
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                            <div class="col-12 md:col-6">
+                                <div class="field">
+                                    <label for="district">District</label>
+                                    <p-dropdown [(ngModel)]="donar.district" inputId="class" optionValue="value" [options]="districts"
+                                        placeholder="Select District">
+                                        <ng-template pTemplate="selectedItem">
+                                            {{donar.district}}
+                                        </ng-template>
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                            <div class="col-12 md:col-6">
+                                <div class="field">
+                                    <label for="address">Address</label>
+                                    <input type="text" pInputText id="address" [(ngModel)]="donar.address" required autofocus
+                                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !donar.address}" />
+                                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !donar.address">Address is required.</small>
+                                </div>
+                            </div>
+                            <div class="col-12 md:col-6">
+                                <div class="field">
+                                    <label for="pincode">Pincode</label>
+                                    <input type="text" pInputText id="pincode" [(ngModel)]="donar.pincode" required autofocus
+                                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !donar.pincode}" />
+                                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !donar.pincode">Pincode is required.</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </ng-template>
 
@@ -173,48 +199,80 @@
 
 
 
-        <p-dialog [(visible)]="donarViewDialog" [style]="{width: '450px'}" header="Donar Details" [modal]="true"
+        <p-dialog [(visible)]="donarViewDialog" [style]="{width: '1000px'}" header="Donar Details" [modal]="true"
             class="p-fluid">
             <ng-template pTemplate="content">
-                <div class="field">
-                    <label for="name">Name</label>
-                    <input type="text" pInputText id="name" [(ngModel)]="donar.name" readonly required autofocus />
-                </div>
-                <div class="field">
-                    <label for="dob">DOB</label>
-                    <input type="text" pInputText id="dob" [(ngModel)]="donar.dob" readonly required autofocus />
-                </div>
-                <div class="field">
-                    <label for="gender">Gender</label>
-                    <input type="text" pInputText id="gender" [(ngModel)]="donar.gender" readonly required autofocus />
-                </div>
-                <div class="field">
-                    <label for="fathername">Father's Name</label>
-                    <input type="text" pInputText id="fathername" [(ngModel)]="donar.fathername" readonly required autofocus />
-                </div>
-                <div class="field">
-                    <label for="mobile">Mobile</label>
-                    <input type="text" pInputText id="mobile" [(ngModel)]="donar.mobile" readonly required autofocus />
-                </div>
-                <div class="field">
-                    <label for="email">Email</label>
-                    <input type="text" pInputText id="email" [(ngModel)]="donar.email" readonly required autofocus />
-                </div>
-                <div class="field">
-                    <label for="state">State</label>
-                    <input type="text" pInputText id="state" [(ngModel)]="donar.state" readonly required autofocus />
-                </div>
-                <div class="field">
-                    <label for="district">Gender</label>
-                    <input type="text" pInputText id="district" [(ngModel)]="donar.district" readonly required autofocus />
-                </div>
-                <div class="field">
-                    <label for="address">Address</label>
-                    <input type="text" pInputText id="address" [(ngModel)]="donar.address" readonly required autofocus />
-                </div>
-                <div class="field">
-                    <label for="pincode">Pincode</label>
-                    <input type="text" pInputText id="pincode" [(ngModel)]="donar.pincode" readonly required autofocus />
+                <div class="col-12">
+                    <div class="card">
+                        <div class="grid">
+                            <div class="col-12 md:col-6">
+                                <div class="field">
+                                    <label for="name">Name</label>
+                                    <input type="text" pInputText id="name" [(ngModel)]="donar.name" readonly required autofocus />
+                                </div>
+                            </div>
+                            <div class="col-12 md:col-6">
+                                <div class="field">
+                                    <label for="dob">DOB</label>
+                                    <input type="text" pInputText id="dob" [(ngModel)]="donar.dob" readonly required autofocus />
+                                </div>
+                            </div>
+                            <div class="col-12 md:col-6">
+                                <div class="field">
+                                    <label for="gender">Gender</label>
+                                    <input type="text" pInputText id="gender" [(ngModel)]="donar.gender" readonly required autofocus />
+                                </div>
+                            </div>
+                            <div class="col-12 md:col-6">
+                                <div class="field">
+                                    <label for="group">Blood Group</label>
+                                    <input type="text" pInputText id="group" [(ngModel)]="donar.group" readonly required autofocus />
+                                </div>
+                            </div>
+                            <div class="col-12 md:col-6">
+                                <div class="field">
+                                    <label for="fathername">Father's Name</label>
+                                    <input type="text" pInputText id="fathername" [(ngModel)]="donar.fathername" readonly required autofocus />
+                                </div>
+                            </div>
+                            <div class="col-12 md:col-6">
+                                <div class="field">
+                                    <label for="mobile">Mobile</label>
+                                    <input type="text" pInputText id="mobile" [(ngModel)]="donar.mobile" readonly required autofocus />
+                                </div>
+                            </div>
+                            <div class="col-12 md:col-6">
+                                <div class="field">
+                                    <label for="email">Email</label>
+                                    <input type="text" pInputText id="email" [(ngModel)]="donar.email" readonly required autofocus />
+                                </div>
+                            </div>
+                            <div class="col-12 md:col-6">
+                                <div class="field">
+                                    <label for="state">State</label>
+                                    <input type="text" pInputText id="state" [(ngModel)]="donar.state" readonly required autofocus />
+                                </div>
+                            </div>
+                            <div class="col-12 md:col-6">
+                                <div class="field">
+                                    <label for="district">Gender</label>
+                                    <input type="text" pInputText id="district" [(ngModel)]="donar.district" readonly required autofocus />
+                                </div>
+                            </div>
+                            <div class="col-12 md:col-6">
+                                <div class="field">
+                                    <label for="address">Address</label>
+                                    <input type="text" pInputText id="address" [(ngModel)]="donar.address" readonly required autofocus />
+                                </div>
+                            </div>
+                            <div class="col-12 md:col-6">
+                                <div class="field">
+                                    <label for="pincode">Pincode</label>
+                                    <input type="text" pInputText id="pincode" [(ngModel)]="donar.pincode" readonly required autofocus />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
             </ng-template>
