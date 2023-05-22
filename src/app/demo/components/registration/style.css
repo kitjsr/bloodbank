@@ -1,0 +1,11 @@
+.bb-btn{
+    padding:10px 25px;
+    font-weight: bold;
+    background: #8A1D1F;
+    color:#FFF;
+}
+.invalid-feedback{
+    color:red;
+    margin: 0;
+    padding:0;
+}

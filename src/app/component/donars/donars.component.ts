@@ -9,7 +9,8 @@ import autoTable from 'jspdf-autotable';
 import { Donar } from './donar';
 import { DonarService } from '../../services/donar.service';
 import { UserService } from '../../_services/user.service';
-
+import { StorageService } from '../../_services/storage.service';
+import { Router } from "@angular/router";
 @Component({
     templateUrl: './donars.component.html',
     providers: [MessageService],
@@ -30,14 +31,31 @@ export class DonarsComponent implements OnInit {
     states: any[]=[];
     districts: any[]=[];
     rowsPerPageOptions = [5, 10, 20];
+    currentUser: any;
 
     constructor(
         private messageService: MessageService,
         private donarService: DonarService,
-        private userService: UserService
+        private userService: UserService,
+        private storageService: StorageService,
+        private router: Router
     ) {}
 
     ngOnInit() {
+        // Fetch Login User Details
+        this.currentUser = this.storageService.getUser();
+        // Check User login or not
+        // If user not login then redirect to login page
+        if(Object.keys(this.currentUser).length===0){
+            this.router.navigate(['/landing']);
+          }
+        
+       
+        // If login user is Donar then redirect to Dashboard
+        if(this.currentUser.roles[0]==="ROLE_USER"){
+            this.router.navigate(['/dashboard']);
+          }
+        
         this.retrieveDonars();
         this.genders = [
             { label: 'Male', value: 'Male' },
