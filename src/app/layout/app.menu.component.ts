@@ -57,6 +57,7 @@ export class AppMenuComponent implements OnInit {
                     { label: 'Blood Stocks Availability', icon: 'pi pi-fw pi-home', routerLink: ['/stocks'] },
                     { label: 'Donation', icon: 'pi pi-fw pi-home', routerLink: ['/donation'] },
                     { label: 'Donation Report', icon: 'pi pi-fw pi-home', routerLink: ['/donationreport'] },
+                    { label: 'History', icon: 'pi pi-fw pi-home', routerLink: ['/history'] },
                     // { label: 'Trainers', icon: 'pi pi-fw pi-id-card', routerLink: ['/trainers'] },
                     // { label: 'Members', icon: 'pi pi-fw pi-id-card', routerLink: ['/members'] },
                     // { label: 'Subscription', icon: 'pi pi-fw pi-check-square', routerLink: ['/subscription'] },

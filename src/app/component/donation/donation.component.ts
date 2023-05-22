@@ -15,6 +15,9 @@ import { DirectoryService } from '../../services/directory.service';
 import { Donation } from './donation';
 import { DonationService } from '../../services/donation.service';
 
+import { StorageService } from 'src/app/_services/storage.service';
+import { Router } from '@angular/router';
+
 
 @Component({
     templateUrl: './donation.component.html',
@@ -27,6 +30,7 @@ export class DonationComponent implements OnInit {
 
     donars: Donar[] = [];
     donar: Donar ={};
+    
     directorys: Directory[] = [];
     directory: Directory ={};
 
@@ -37,15 +41,31 @@ export class DonationComponent implements OnInit {
     rowsPerPageOptions = [5, 10, 20];
 
     subscribeDialogBox: boolean=false;
+    currentUser: any;
 
     constructor(
         private messageService: MessageService,
         private donationService: DonationService,
         private donarService: DonarService,
-        private directoryService: DirectoryService
+        private directoryService: DirectoryService,
+        private storageService: StorageService,
+        private router: Router
     ) {}
 
     ngOnInit() {
+        // Fetch Login User Details
+        this.currentUser = this.storageService.getUser();
+        // Check User login or not
+        // If user not login then redirect to login page
+        if(Object.keys(this.currentUser).length===0){
+            this.router.navigate(['/landing']);
+          }
+        
+       
+        // If login user is Donar then redirect to Dashboard
+        if(this.currentUser.roles[0]==="ROLE_USER"){
+            this.router.navigate(['/dashboard']);
+          }
         
         this.retrieveDonars();
         this.retrieveDirectorys();

@@ -9,6 +9,8 @@ import { Donationreport } from './donationreport';
 import { DonationreportService } from '../../services/donationreport.service';
 import { DonarService } from '../../services/donar.service';
 import { DonationService } from '../../services/donation.service';
+import { StorageService } from 'src/app/_services/storage.service';
+import { Router } from '@angular/router';
 
 
 
@@ -43,14 +45,30 @@ export class DonationreportsComponent implements OnInit {
     donations: any[] = [];
     // trainernames: any[] = [];
     rowsPerPageOptions = [5, 10, 20];
+    currentUser: any;
 
     constructor(
         private messageService: MessageService,
         private donationreportService: DonationreportService,
-        private donationService: DonationService
+        private donationService: DonationService,
+        private storageService: StorageService,
+        private router: Router
     ) {}
 
     ngOnInit() {
+        // Fetch Login User Details
+        this.currentUser = this.storageService.getUser();
+        // Check User login or not
+        // If user not login then redirect to login page
+        if(Object.keys(this.currentUser).length===0){
+            this.router.navigate(['/landing']);
+          }
+        
+       
+        // If login user is Donar then redirect to Dashboard
+        if(this.currentUser.roles[0]==="ROLE_USER"){
+            this.router.navigate(['/dashboard']);
+          }
         this.retrieveDonationreports();
         // this.subscriptions = [
         //     { label: '1 Month', value: '1 Month' },
