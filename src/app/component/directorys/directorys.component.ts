@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Product } from 'src/app/demo/api/product';
 import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import * as FileSaver from 'file-saver';
@@ -8,7 +7,7 @@ import autoTable from 'jspdf-autotable';
 
 import { Directory } from './directory';
 import { DirectoryService } from '../../services/directory.service';
-
+import { AuthService } from '../../_services/auth.service';
 
 @Component({
     templateUrl: './directorys.component.html',
@@ -30,7 +29,8 @@ export class DirectorysComponent implements OnInit {
 
     constructor(
         private messageService: MessageService,
-        private directoryService: DirectoryService
+        private directoryService: DirectoryService,
+        private authService: AuthService
     ) {}
 
     ngOnInit() {
@@ -96,7 +96,7 @@ export class DirectorysComponent implements OnInit {
     }
     saveDirectory() {
         this.submitted = true;
-
+       
         if (
                 this.directory.name?.trim()&&
                 this.directory.address?.trim()&&
@@ -136,6 +136,18 @@ export class DirectorysComponent implements OnInit {
                         console.log(error);
                     }
                 );
+                this.authService.register(this.directory.email, this.directory.email, this.directory.email).subscribe({
+                    next: (data: any) => {
+                      console.log(data);
+                    //   this.isSuccessful = true;
+                    //   this.isSignUpFailed = false;
+                    },
+                    error: (err: { error: { message: any; }; }) => {
+                    //   this.errorMessage = err.error.message;
+                    //   this.isSignUpFailed = true;
+                    console.log(err.error.message);
+                    }
+                  });
 
                 this.submitted = true;
                 this.messageService.add({
