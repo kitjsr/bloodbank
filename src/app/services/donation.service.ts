@@ -16,6 +16,9 @@ export class DonationService {
   getAllDonation(): Observable<any> {
     return this.http.get(`${baseUrl}/donation/`);
   }
+  getAllDonationSingleDonar(email: string): Observable<any> {
+    return this.http.get(`${baseUrl}/donation/findAllDonationsSingleUser/${email}`);
+  }
 
 
   get(id: any): Observable<any> {

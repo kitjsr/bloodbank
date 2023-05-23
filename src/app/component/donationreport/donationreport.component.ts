@@ -20,17 +20,7 @@ import { Router } from '@angular/router';
     providers: [MessageService],
 })
 export class DonationreportsComponent implements OnInit {
-    expiryDate(arg0: Date) {
-        // arg0.setHours(0);
-        // arg0.setMinutes(0);
-        // arg0.setSeconds(0);
-        console.log(arg0);
-        // var newDate = new Date(arg0.setMonth(arg0.getMonth()+1));
-        // // var newDate = arg0.addMonths(1);
-        // console.log(newDate);
-        return arg0;
-        throw new Error('Method not implemented.');
-    }
+    
    
     donationreports: Donationreport[] = [];
     donationreport: Donationreport = {};

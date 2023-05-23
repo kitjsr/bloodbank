@@ -1,8 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { Product } from 'src/app/demo/api/product';
 import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
-import { ProductService } from 'src/app/demo/service/product.service';
+import * as FileSaver from 'file-saver';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
+import { Donar } from '../donars/donar';
+import { Donationreport } from '../donationreport/donationreport';
+import { DonationreportService } from '../../services/donationreport.service';
+import { DonarService } from '../../services/donar.service';
+import { DonationService } from '../../services/donation.service';
+import { StorageService } from 'src/app/_services/storage.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -11,114 +19,102 @@ import { ProductService } from 'src/app/demo/service/product.service';
 })
 export class HistoryComponent implements OnInit {
 
-    productDialog: boolean = false;
-
-    deleteProductDialog: boolean = false;
-
+    
+   
+    donationreports: Donationreport[] = [];
+    donationreport: Donationreport = {};
+    donars: Donar[] = [];
+    selectedDonationreports: Donationreport[] = [];
+    donationreportDialog: boolean = false;
+    donationreportViewDialog: boolean = false;
+    deleteDonationreportDialog: boolean = false;
+    deleteDonationreportsDialog: boolean = false;
     deleteProductsDialog: boolean = false;
-
-    products: Product[] = [];
-
-    product: Product = {};
-
-    selectedProducts: Product[] = [];
-
     submitted: boolean = false;
-
-    cols: any[] = [];
-
-    statuses: any[] = [];
-
+    donations: any[] = [];
+    // trainernames: any[] = [];
     rowsPerPageOptions = [5, 10, 20];
+    currentUser: any;
 
-    constructor(private productService: ProductService, private messageService: MessageService) { }
+    constructor(
+        private messageService: MessageService,
+        private donationreportService: DonationreportService,
+        private donationService: DonationService,
+        private storageService: StorageService,
+        private router: Router
+    ) {}
 
     ngOnInit() {
-        this.productService.getProducts().then(data => this.products = data);
-
-        this.cols = [
-            { field: 'product', header: 'Product' },
-            { field: 'price', header: 'Price' },
-            { field: 'category', header: 'Category' },
-            { field: 'rating', header: 'Reviews' },
-            { field: 'inventoryStatus', header: 'Status' }
-        ];
-
-        this.statuses = [
-            { label: 'INSTOCK', value: 'instock' },
-            { label: 'LOWSTOCK', value: 'lowstock' },
-            { label: 'OUTOFSTOCK', value: 'outofstock' }
-        ];
+        // Fetch Login User Details
+        this.currentUser = this.storageService.getUser();
+        // Check User login or not
+        // If user not login then redirect to login page
+        if(Object.keys(this.currentUser).length===0){
+            this.router.navigate(['/landing']);
+          }
+        
+       
+        // If login user is Donar then redirect to Dashboard
+        if(this.currentUser.roles[0]!=="ROLE_USER"){
+            this.router.navigate(['/dashboard']);
+          }
+        this.retrieveDonationreports();
+        // this.subscriptions = [
+        //     { label: '1 Month', value: '1 Month' },
+        //     { label: '3 Month', value: '3 Month' },
+        //     { label: '6 Month', value: '6 Month' },
+        //     { label: '12 Month', value: '12 Month' },
+        // ];
     }
 
-    openNew() {
-        this.product = {};
-        this.submitted = false;
-        this.productDialog = true;
+    exportExcel() {
+        import('xlsx').then((xlsx) => {
+            const worksheet = xlsx.utils.json_to_sheet(this.donationreports);
+            const workbook = {
+                Sheets: { data: worksheet },
+                SheetNames: ['data'],
+            };
+            const excelBuffer: any = xlsx.write(workbook, {
+                bookType: 'xlsx',
+                type: 'array',
+            });
+            this.saveAsExcelFile(excelBuffer, 'donationreports');
+        });
     }
 
-    deleteSelectedProducts() {
-        this.deleteProductsDialog = true;
+    saveAsExcelFile(buffer: any, fileName: string): void {
+        let EXCEL_TYPE =
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+        let EXCEL_EXTENSION = '.xlsx';
+        const data: Blob = new Blob([buffer], {
+            type: EXCEL_TYPE,
+        });
+        FileSaver.saveAs(
+            data,
+            fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION
+        );
     }
-
-    editProduct(product: Product) {
-        this.product = { ...product };
-        this.productDialog = true;
+    exportPdf() {
+        const doc = new jsPDF('l', 'mm', 'a4');
+        autoTable(doc, { html: '#pr_id_2-table' });
+        doc.save('donationreports.pdf');
     }
-
-    deleteProduct(product: Product) {
-        this.deleteProductDialog = true;
-        this.product = { ...product };
-    }
-
-    confirmDeleteSelected() {
-        this.deleteProductsDialog = false;
-        this.products = this.products.filter(val => !this.selectedProducts.includes(val));
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
-        this.selectedProducts = [];
-    }
-
-    confirmDelete() {
-        this.deleteProductDialog = false;
-        this.products = this.products.filter(val => val.id !== this.product.id);
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
-        this.product = {};
-    }
-
-    hideDialog() {
-        this.productDialog = false;
-        this.submitted = false;
-    }
-
-    saveProduct() {
-        this.submitted = true;
-
-        if (this.product.name?.trim()) {
-            if (this.product.id) {
-                // @ts-ignore
-                this.product.inventoryStatus = this.product.inventoryStatus.value ? this.product.inventoryStatus.value : this.product.inventoryStatus;
-                this.products[this.findIndexById(this.product.id)] = this.product;
-                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
-            } else {
-                this.product.id = this.createId();
-                this.product.code = this.createId();
-                this.product.image = 'product-placeholder.svg';
-                // @ts-ignore
-                this.product.inventoryStatus = this.product.inventoryStatus ? this.product.inventoryStatus.value : 'INSTOCK';
-                this.products.push(this.product);
-                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
+    retrieveDonationreports(): void {
+        this.donationService.getAllDonationSingleDonar(this.currentUser.email).subscribe(
+            (data) => {
+                this.donationreports = data;
+                console.log(data);
+            },
+            (error) => {
+                console.log(error);
             }
-
-            this.products = [...this.products];
-            this.productDialog = false;
-            this.product = {};
-        }
+        );
     }
 
     findIndexById(id: string): number {
         let index = -1;
-        for (let i = 0; i < this.products.length; i++) {
-            if (this.products[i].id === id) {
+        for (let i = 0; i < this.donationreports.length; i++) {
+            if (this.donationreports[i].id === id) {
                 index = i;
                 break;
             }
@@ -127,16 +123,10 @@ export class HistoryComponent implements OnInit {
         return index;
     }
 
-    createId(): string {
-        let id = '';
-        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        for (let i = 0; i < 5; i++) {
-            id += chars.charAt(Math.floor(Math.random() * chars.length));
-        }
-        return id;
-    }
-
     onGlobalFilter(table: Table, event: Event) {
-        table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+        table.filterGlobal(
+            (event.target as HTMLInputElement).value,
+            'contains'
+        );
     }
 }
