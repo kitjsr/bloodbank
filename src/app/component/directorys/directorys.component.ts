@@ -19,7 +19,7 @@ export class DirectorysComponent implements OnInit {
     selectedDirectorys: Directory[] = [];
     directoryDialog: boolean = false;
     deleteDirectoryDialog: boolean = false;
-    directoryViewDialog:boolean=false;
+    directoryViewDialog: boolean = false;
     deleteDirectorysDialog: boolean = false;
     deleteProductsDialog: boolean = false;
     submitted: boolean = false;
@@ -31,26 +31,16 @@ export class DirectorysComponent implements OnInit {
         private messageService: MessageService,
         private directoryService: DirectoryService,
         private authService: AuthService
-    ) {}
+    ) { }
 
     ngOnInit() {
         this.retrieveDirectorys();
         this.categorys = [
-          { label: 'Govt.', value: 'Govt.' },
-          { label: 'Private', value: 'Private' },
-          { label: 'Red Cross', value: 'Red Cross' },
-          { label: 'Charitable/Vol', value: 'Charitable/Vol' },
-      ];
-    //   this.groups = [
-    //     { label: 'AB +ve', value: 'AB +ve' },
-    //     { label: 'AB -ve', value: 'AB -ve' },
-    //     { label: 'A +ve', value: 'A +ve' },
-    //     { label: 'A -ve', value: 'A -ve' },
-    //     { label: 'B +ve', value: 'B +ve' },
-    //     { label: 'B -ve', value: 'B -ve' },
-    //     { label: 'O +ve', value: 'O +ve' },
-    //     { label: 'O -ve', value: 'O -ve' },
-    // ];
+            { label: 'Govt.', value: 'Govt.' },
+            { label: 'Private', value: 'Private' },
+            { label: 'Red Cross', value: 'Red Cross' },
+            { label: 'Charitable/Vol', value: 'Charitable/Vol' },
+        ];
     }
     exportExcel() {
         import('xlsx').then((xlsx) => {
@@ -96,14 +86,13 @@ export class DirectorysComponent implements OnInit {
     }
     saveDirectory() {
         this.submitted = true;
-       
+
         if (
-                this.directory.name?.trim()&&
-                this.directory.address?.trim()&&
-                // this.directory.mobile?.trim()&&
-                this.directory.email?.trim()&&
-                this.directory.category?.trim()
-        ){
+            this.directory.name?.trim() &&
+            this.directory.address?.trim() &&
+            this.directory.email?.trim() &&
+            this.directory.category?.trim()
+        ) {
             console.log(this.directory.id);
             if (this.directory.id) {
                 console.log('update test');
@@ -136,18 +125,20 @@ export class DirectorysComponent implements OnInit {
                         console.log(error);
                     }
                 );
-                this.authService.register(this.directory.email, this.directory.email, this.directory.email).subscribe({
-                    next: (data: any) => {
-                      console.log(data);
-                    //   this.isSuccessful = true;
-                    //   this.isSignUpFailed = false;
-                    },
-                    error: (err: { error: { message: any; }; }) => {
-                    //   this.errorMessage = err.error.message;
-                    //   this.isSignUpFailed = true;
-                    console.log(err.error.message);
-                    }
-                  });
+                this.authService
+                    .register(
+                        this.directory.email,
+                        this.directory.email,
+                        this.directory.email
+                    )
+                    .subscribe({
+                        next: (data: any) => {
+                            console.log(data);
+                        },
+                        error: (err: { error: { message: any } }) => {
+                            console.log(err.error.message);
+                        },
+                    });
 
                 this.submitted = true;
                 this.messageService.add({
@@ -173,8 +164,8 @@ export class DirectorysComponent implements OnInit {
         this.deleteDirectorysDialog = true;
     }
     viewDirectory(directory: Directory) {
-        this.directory = { ...directory};
-        this.directoryViewDialog= true;
+        this.directory = { ...directory };
+        this.directoryViewDialog = true;
     }
     editDirectory(directory: Directory) {
         this.directory = { ...directory };
@@ -239,7 +230,7 @@ export class DirectorysComponent implements OnInit {
 
     hideDialog() {
         this.directoryDialog = false;
-        this.directoryViewDialog=false;
+        this.directoryViewDialog = false;
         this.submitted = false;
     }
 
@@ -262,5 +253,3 @@ export class DirectorysComponent implements OnInit {
         );
     }
 }
-
-

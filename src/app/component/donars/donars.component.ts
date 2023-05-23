@@ -11,6 +11,7 @@ import { DonarService } from '../../services/donar.service';
 import { UserService } from '../../_services/user.service';
 import { StorageService } from '../../_services/storage.service';
 import { Router } from "@angular/router";
+import { AuthService } from 'src/app/_services/auth.service';
 @Component({
     templateUrl: './donars.component.html',
     providers: [MessageService],
@@ -21,41 +22,43 @@ export class DonarsComponent implements OnInit {
     selectedDonars: Donar[] = [];
     donarDialog: boolean = false;
     deleteDonarDialog: boolean = false;
-    donarViewDialog:boolean=false;
+    donarViewDialog: boolean = false;
     deleteDonarsDialog: boolean = false;
     deleteProductsDialog: boolean = false;
     submitted: boolean = false;
     genders: any[] = [];
     donations: any[] = [];
     groups: any[] = [];
-    states: any[]=[];
-    districts: any[]=[];
+    states: any[] = [];
+    districts: any[] = [];
     rowsPerPageOptions = [5, 10, 20];
     currentUser: any;
+
 
     constructor(
         private messageService: MessageService,
         private donarService: DonarService,
         private userService: UserService,
         private storageService: StorageService,
-        private router: Router
-    ) {}
+        private router: Router,
+        private authService: AuthService
+    ) { }
 
     ngOnInit() {
         // Fetch Login User Details
         this.currentUser = this.storageService.getUser();
         // Check User login or not
         // If user not login then redirect to login page
-        if(Object.keys(this.currentUser).length===0){
+        if (Object.keys(this.currentUser).length === 0) {
             this.router.navigate(['/landing']);
-          }
-        
-       
+        }
+
+
         // If login user is Donar then redirect to Dashboard
-        if(this.currentUser.roles[0]==="ROLE_USER"){
+        if (this.currentUser.roles[0] === "ROLE_USER") {
             this.router.navigate(['/dashboard']);
-          }
-        
+        }
+
         this.retrieveDonars();
         this.genders = [
             { label: 'Male', value: 'Male' },
@@ -72,8 +75,8 @@ export class DonarsComponent implements OnInit {
             { label: 'O +ve', value: 'O +ve' },
             { label: 'O -ve', value: 'O -ve' },
         ];
-        this.states =[
-            
+        this.states = [
+
             // { label: 'Andhra Pradesh', value: 'Andhra Pradesh' },
             // { label: 'Arunachal Pradesh', value: 'Arunachal Pradesh' },
             // { label: 'Assam', value: 'Assam' },
@@ -104,7 +107,7 @@ export class DonarsComponent implements OnInit {
             // { label: 'West Bengal', value: 'West Bengal' },
         ];
         this.districts = [
-            { label: 'East Singhbhum', value: 'East Singhbhum' }, 
+            { label: 'East Singhbhum', value: 'East Singhbhum' },
         ]
     }
     exportExcel() {
@@ -153,21 +156,21 @@ export class DonarsComponent implements OnInit {
         this.submitted = true;
 
         if (
-                this.donar.name?.trim()&&
-                this.donar.dob?.trim()&&
-                this.donar.gender?.trim()&&
-                this.donar.group?.trim()&&
-                this.donar.fathername?.trim()&&
-                this.donar.email?.trim()&&
-                this.donar.state?.trim()&&
-                this.donar.district?.trim()&&
-                this.donar.address?.trim()&&
-                this.donar.pincode?.trim()
-                // this.donar.mobile?.trim
+            this.donar.name?.trim() &&
+            this.donar.dob?.trim() &&
+            this.donar.gender?.trim() &&
+            this.donar.group?.trim() &&
+            this.donar.fathername?.trim() &&
+            this.donar.email?.trim() &&
+            this.donar.state?.trim() &&
+            this.donar.district?.trim() &&
+            this.donar.address?.trim() &&
+            this.donar.pincode?.trim()
+            // this.donar.mobile?.trim
 
 
 
-        ){
+        ) {
             console.log(this.donar.id);
             if (this.donar.id) {
                 console.log('update test');
@@ -208,11 +211,26 @@ export class DonarsComponent implements OnInit {
                     detail: 'Donar Successfully Registered',
                     life: 3000,
                 });
+                this.authService
+                    .register(
+                        this.donar.email,
+                        this.donar.email,
+                        this.donar.email
+                    )
+                    .subscribe({
+                        next: (data: any) => {
+                            console.log(data);
+                        },
+                        error: (err: { error: { message: any } }) => {
+                            console.log(err.error.message);
+                        },
+                    });
             }
 
             this.donarDialog = false;
             this.donar = {};
         }
+
     }
 
     openNew() {
@@ -226,7 +244,7 @@ export class DonarsComponent implements OnInit {
     }
     viewDonar(donar: Donar) {
         this.donar = { ...donar };
-        this.donarViewDialog= true;
+        this.donarViewDialog = true;
     }
     editDonar(donar: Donar) {
         this.donar = { ...donar };
@@ -291,7 +309,7 @@ export class DonarsComponent implements OnInit {
 
     hideDialog() {
         this.donarDialog = false;
-        this.donarViewDialog=false;
+        this.donarViewDialog = false;
         this.submitted = false;
     }
 

@@ -6,7 +6,7 @@ export interface Donar {
     group?:string;
     fathername?:string;
     mobile?:number;
-    email?:string;
+    email?:any;
     state?:string;
     district?:string;
     address?:string;

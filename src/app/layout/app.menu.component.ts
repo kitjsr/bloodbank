@@ -80,7 +80,7 @@ export class AppMenuComponent implements OnInit {
                   },
                   {
                       label: 'Donars',
-                      icon: 'pi pi-fw pi-home',
+                      icon: 'pi pi-fw pi-users',
                       routerLink: ['/donars'],
                   },
                   {
