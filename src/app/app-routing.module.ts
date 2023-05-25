@@ -21,6 +21,7 @@ import { ProfileComponent } from './profile/profile.component';
                     { path: 'donation', loadChildren: () => import('./component/donation/donation.module').then(m => m.DonationModule) },             
                     { path: 'donationreport', loadChildren: () => import('./component/donationreport/donationreport.module').then(m => m.DonationreportModule) },             
                     { path: 'history', loadChildren: () => import('./component/history/history.module').then(m => m.HistoryModule) },             
+                    { path: 'usertype', loadChildren: () => import('./component/usertype/usertype.module').then(m => m.UsertypeModule) },             
 
                     // gym related:
                     { path: 'members', loadChildren: () => import('./component/members/members.module').then(m => m.MembersModule) },             
