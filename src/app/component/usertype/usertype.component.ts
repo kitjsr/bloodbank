@@ -17,8 +17,9 @@ import { AuthService } from 'src/app/_services/auth.service';
     providers: [MessageService],
 })
 export class UsertypeComponent implements OnInit {
-    usertypeDialog: boolean = false;
+    changeUsertypeDialogBox: boolean = false;
     submitted: boolean = false;
+    usertypeDialog: boolean = false;
     type: any[] = [];
 
     rowsPerPageOptions = [5, 10, 20];
@@ -70,7 +71,7 @@ export class UsertypeComponent implements OnInit {
             }
         );
     }
-    changeUserType() {
+    saveUserType() {
         this.submitted = true;
 
         if (this.usertype.type?.trim()) {
@@ -99,8 +100,11 @@ export class UsertypeComponent implements OnInit {
             // }
         }
     }
+
+    
+
     hideDialog() {
-        // this.subscribeDialogBox = false;
+        this.changeUsertypeDialogBox = false;
         this.submitted = false;
     }
     editUsertype(usertype: Usertype) {

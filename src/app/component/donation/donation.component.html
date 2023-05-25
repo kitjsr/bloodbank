@@ -60,15 +60,7 @@
         <p-dialog [(visible)]="subscribeDialogBox" [style]="{width: '450px',height: '400px'}" header="Donation Details" [modal]="true"
             class="p-fluid">
             <ng-template pTemplate="content">
-                <!-- <div class="field">
-                    <label for="donation">Donate Blood</label>
-                    <p-dropdown [(ngModel)]="donar.name" inputId="plan" optionValue="value"
-                        placeholder="Choose Donation">
-                        <ng-template pTemplate="selectedItem">
-                            {{donar.name}}
-                        </ng-template>
-                    </p-dropdown>
-                </div> -->
+                
                 <div class="field">
                     <label for="name">Doner</label>
                     <select pInputText [(ngModel)]="donation.donarId" placeholder="Choose Donar Name"  required>
