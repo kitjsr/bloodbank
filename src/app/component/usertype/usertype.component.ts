@@ -1,14 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
-import * as FileSaver from 'file-saver';
-import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable';
 
 import { Usertype } from '../usertype/usertype';
-import { DonarService } from '../../services/donar.service';
 import { UsertypeService } from '../../services/usertype.service';
-import { UserService } from '../../_services/user.service';
+import { UserService } from '../../services/user.service';
 import { StorageService } from '../../_services/storage.service';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/_services/auth.service';
@@ -27,10 +23,9 @@ export class UsertypeComponent implements OnInit {
 
     usertypes: Usertype[] = [];
     usertype: Usertype = {};
-
+    ktype:any={};
     constructor(
         private messageService: MessageService,
-        private donarService: DonarService,
         private userService: UserService,
         private storageService: StorageService,
         private router: Router,
@@ -52,16 +47,16 @@ export class UsertypeComponent implements OnInit {
             this.router.navigate(['/dashboard']);
         }
 
-        this.retrieveUsertypes();
+        this.retrieveUsers();
 
         this.type = [
-            { label: 'Donar', value: '1' },
-            { label: 'Blood Bank', value: '2' },
+            { label: 'Donar (user)', value: '1' },
+            { label: 'Blood Bank (moderator)', value: '2' },
         ];
     }
 
-    retrieveUsertypes(): void {
-        this.usertypeService.getAll().subscribe(
+    retrieveUsers(): void {
+        this.userService.getAll().subscribe(
             (data) => {
                 this.usertypes = data;
                 console.log(data);
@@ -73,38 +68,39 @@ export class UsertypeComponent implements OnInit {
     }
     saveUserType() {
         this.submitted = true;
+        
+        if (this.usertype.userrole?.trim()) {
+        //     console.log('Hello');
+        // console.log(this.usertype);
+        // console.log(this.usertype.userrole);
+            this.ktype.roleId=this.usertype.userrole;
+                console.log('update test');
+                this.usertypeService
+                    .update(this.usertype.id, this.ktype)
+                    .subscribe(
+                        (response) => {
+                            console.log(response);
+                            this.ngOnInit();
+                        },
+                        (error) => {
+                            console.log(error);
+                        }
+                    );
 
-        if (this.usertype.type?.trim()) {
-            console.log('Hello');
-            // if (this.usertype.id) {
-            //     console.log('update test');
-            //     this.donarService
-            //         .update(this.usertype.id, this.usertype)
-            //         .subscribe(
-            //             (response) => {
-            //                 console.log(response);
-            //                 this.ngOnInit();
-            //             },
-            //             (error) => {
-            //                 console.log(error);
-            //             }
-            //         );
-
-            //     this.messageService.add({
-            //         severity: 'success',
-            //         summary: 'Successful',
-            //         detail: 'Donar Successfully Updated',
-            //         life: 3000,
-            //     });
-            // } else {
-            // }
+                this.messageService.add({
+                    severity: 'success',
+                    summary: 'Successful',
+                    detail: 'User Type Successfully Updated',
+                    life: 3000,
+                });
         }
+        this.usertypeDialog=false;
     }
 
     
 
     hideDialog() {
-        this.changeUsertypeDialogBox = false;
+        this.usertypeDialog = false;
         this.submitted = false;
     }
     editUsertype(usertype: Usertype) {
