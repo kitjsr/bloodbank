@@ -14,7 +14,9 @@ import { ProfileComponent } from './profile/profile.component';
                     { path: '', loadChildren: () => import('./component/dashboard/dashboard.module').then(m => m.DashboardModule) },
                     { path: 'profile', component: ProfileComponent },
                     // { path: 'logout', component: ProfileComponent },
+                    
                     // blood bank
+                    { path: 'dashboard', loadChildren: () => import('./component/dashboard/dashboard.module').then(m => m.DashboardModule) },
                     { path: 'donars', loadChildren: () => import('./component/donars/donars.module').then(m => m.DonarsModule) },             
                     { path: 'directorys', loadChildren: () => import('./component/directorys/directorys.module').then(m => m.DirectorysModule) },             
                     { path: 'stocks', loadChildren: () => import('./component/stocks/stocks.module').then(m => m.StocksModule) },             
@@ -23,20 +25,7 @@ import { ProfileComponent } from './profile/profile.component';
                     { path: 'history', loadChildren: () => import('./component/history/history.module').then(m => m.HistoryModule) },             
                     { path: 'usertype', loadChildren: () => import('./component/usertype/usertype.module').then(m => m.UsertypeModule) },             
 
-                    // gym related:
-                    { path: 'members', loadChildren: () => import('./component/members/members.module').then(m => m.MembersModule) },             
-                    { path: 'trainers', loadChildren: () => import('./component/trainers/trainers.module').then(m => m.TrainersModule) },
-                    { path: 'subscription', loadChildren: () => import('./component/subscription/subscription.module').then(m => m.SubscriptionModule) },
-                    { path: 'subreports', loadChildren: () => import('./component/subreports/subreports.module').then(m => m.SubreportsModule) },
-                    { path: 'dashboard', loadChildren: () => import('./component/dashboard/dashboard.module').then(m => m.DashboardModule) },
-                    // { path: 'notice', loadChildren: () => import('./component/notice/notice.module').then(m => m.NoticeModule) },
-
-
-
-                    { path: 'students', loadChildren: () => import('./components/students/students.module').then(m => m.StudentsModule) },
-                    // { path: 'login', loadChildren: () => import('../app/demo/components/auth/login/login.module').then(m => m.LoginModule) },
-                    // { path: 'login',  component: LoginComponent  },
-                    { path: 'members', loadChildren: () => import('./component/members/members.module').then(m => m.MembersModule) },
+                     { path: 'students', loadChildren: () => import('./components/students/students.module').then(m => m.StudentsModule) },
                     { path: 'tc', loadChildren: () => import('./components/tc/tc.module').then(m => m.TcModule) },
                     { path: 'uikit', loadChildren: () => import('./demo/components/uikit/uikit.module').then(m => m.UIkitModule) },
                     { path: 'utilities', loadChildren: () => import('./demo/components/utilities/utilities.module').then(m => m.UtilitiesModule) },
