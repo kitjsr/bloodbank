@@ -20,6 +20,9 @@ export class DonationService {
     return this.http.get(`${baseUrl}/donation/findAllDonationsSingleUser/${email}`);
   }
 
+  getAllDonationCount(group: string): Observable<any> {
+    return this.http.get(`${baseUrl}/donation/findAllDonationsCount/${group}`);
+  }
 
   get(id: any): Observable<any> {
     return this.http.get(`${baseUrl}/${id}`);
@@ -35,6 +38,10 @@ export class DonationService {
 
   delete(id: any): Observable<any> {
     return this.http.delete(`${baseUrl}/${id}`);
+  }
+
+  count(group:any): Observable<any> {
+    return this.http.get(`${baseUrl}/donation/count/${group}`);
   }
 
   deleteAll(): Observable<any> {

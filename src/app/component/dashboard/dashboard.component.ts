@@ -26,6 +26,8 @@ export class DashboardComponent implements OnInit {
     countdirectorys: any;
     countdonations: any;
     currentUser: any;
+    countgroups: any;
+
     donar="ROLE_USER";
     bloodbank="ROLE_MODERATOR";
     admin="ROLE_ADMIN";
@@ -46,6 +48,7 @@ export class DashboardComponent implements OnInit {
         this.initChart();
         this.retrieveDonarsCount();
         this.retrieveDirectorysCount();
+        this.retrieveGroupsCount();
         this.currentUser = this.storageService.getUser();
         if(Object.keys(this.currentUser).length===0){
             this.router.navigate(['/landing']);
@@ -114,6 +117,17 @@ export class DashboardComponent implements OnInit {
         this.donarService.count().subscribe(
             (data) => {
                 this.countdonars = data.no;
+                console.log(data);
+            },
+            (error) => {
+                console.log(error);
+            }
+        );
+    }
+    retrieveGroupsCount(): void {
+        this.donationService.getAllDonationCount('O +ve').subscribe(
+            (data) => {
+                // this.countgroups = data.no;
                 console.log(data);
             },
             (error) => {
